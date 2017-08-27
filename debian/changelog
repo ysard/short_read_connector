@@ -1,0 +1,26 @@
+short-read-connector (1.1.0-2) UNRELEASED; urgency=medium
+
+  * Ability to find a compile against libgatbcore previously installed on
+  the system.
+  
+  * Add missing link with pthread to executables.
+
+  * Change executable name from short_read_connector.sh to short-read-connector
+  (conventions).
+  
+  * Remove unwanted files from install directive and migrate scripts/ to
+  share/short-read-connector/scripts/.
+  PS: copy only python scripts (not the useless package_tool.sh).
+  
+  * Modify rshort-read-connector with new system paths 
+  (/usr/bin) of used tools.
+  
+  * TODO: Migrate scripts from dinopython2 to python3,.
+
+ -- Pierre Vignet <pierre.vignet.contact@caramail.fr>  Sat, 22 Jul 2017 19:58:22 +0200
+
+short-read-connector (1.1.0-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Pierre Vignet <pierre.vignet.contact@caramail.fr>  Sat, 22 Jul 2017 19:30:54 +0200

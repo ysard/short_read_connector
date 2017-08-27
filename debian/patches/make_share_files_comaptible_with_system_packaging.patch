@@ -1,0 +1,65 @@
+--- a/short_read_connector.sh
++++ b/short_read_connector.sh
+@@ -1,35 +1,13 @@
+ #!/bin/bash
+ 
+-version="1.0.0"
+-
+-
+-
+-EDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd -P )
+-platform='mac'
+-unamestr=`uname`
+-if [[ "$unamestr" == 'Linux' ]]; then
+-    platform='linux'
+-fi
+-
+-dsk_bin=$EDIR/thirdparty/dsk/bin/macosx/dsk
+-if [[ $platform == 'linux' ]]; then
+-    dsk_bin=$EDIR/thirdparty/dsk/bin/linux/dsk
+-fi
+-chmod a+x ${dsk_bin}
+-
+-
+-#BIN DIR:
+-if [ -d "$EDIR/build/" ] ; then # VERSION SOURCE COMPILED
+-    BIN_DIR=$EDIR/build/bin
+-else # VERSION BINARY
+-    BIN_DIR=$EDIR/bin
+-fi
++version="1.1.0"
+ 
++dsk_bin=dsk
+ 
+ function help {
+-    echo "short_read_connector.sh - Compare reads from two read sets (distinct or not)"
++    echo "short-read-connector - Compare reads from two read sets (distinct or not)"
+     echo "Version "$version
+-    echo "Usage: sh short_read_connector.sh -b read_file -q read_file_of_files [OPTIONS]"
++    echo "Usage: short-read-connector -b read_file -q read_file_of_files [OPTIONS]"
+     echo  "MANDATORY:"
+     echo  " -b read_files for bank"
+     echo  "   Example: -b data/c1.fasta.gz"
+@@ -255,11 +233,11 @@
+ # SRC_LINKER_RAM
+ if [ $diskMode -eq 0 ]; then
+     if [ $countMode -eq 0 ]; then
+-        cmd="${BIN_DIR}/SRC_linker_ram"
++        cmd="SRC_linker_ram"
+         threshold_option="-kmer_threshold ${kmer_threshold}"
+     else
+         # SRC_COUNTER
+-        cmd="${BIN_DIR}/SRC_counter"
++        cmd="SRC_counter"
+         threshold_option=""
+     fi
+ else
+@@ -267,7 +245,7 @@
+     exit 1;
+ 
+     # SRC_LINKER_DISK
+-    #cmd="${BIN_DIR}/SRC_linker_disk"
++    #cmd="SRC_linker_disk"
+ fi
+ 
+ 

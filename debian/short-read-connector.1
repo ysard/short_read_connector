@@ -1,0 +1,126 @@
+.\"                                      Hey, EMACS: \-*\- nroff \-*\-
+.\" (C) Copyright 2017 Pierre Vignet <pierre.vignet.contact@caramail.fr>,
+.\"
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1\-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH SHORT\-READ\-CONNECTOR 1 "July 22, 2017"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage\-specific macros, see man(7)
+.SH NAME
+short\-read\-connector \- a tool that enables the comparisons of two read sets.
+
+.SH DESCRIPTION
+Short read connector enables the comparisons of two read sets B and Q. 
+For each read from Q it provides either: * The number of occurrences of 
+each k\-mers of the read in the set B (SRC_counter) or * A list of reads 
+from B that share enough k\-mers with the (a window of) the tested read from A (SRC_linker).
+
+TODO: output/input format
+
+.SH OPTIONS
+
+.BI "Mimimal call"
+Calling SRC_linker between read sets bank and query:
+.PP
+.RS
+short\-read\-connector \-b bank \-q query
+short\-read\-connector \-b read_file \-q read_file_of_files [OPTIONS]
+.RE
+.PP
+
+
+.BI "MANDATORY:"
+.PP
+.RS
+.TP
+.BI "\-b"
+read_files for bank
+.br
+Example: \-b data/c1.fasta.gz
+.TP
+.BI "\-q"
+read_file_of_files for query
+.br
+Example: \-q data/fof.txt (with fof being a file of file descriptor)
+.RE
+.PP
+
+.BI "OPTIONS:"
+.PP
+.RS
+.TP
+.BI "\-c"
+use short_read_connector_counter (SRC_counter)"
+.TP
+.BI "\-r"
+with this option (incompatible with SRC_counter), no precision about pair of similar reads is output. Only ids of reads from queries similar to at least one read from bank are output."
+.TP
+.BI "\-p prefix"
+All out files will start with this prefix. Default=\"short_read_connector_res\""
+.TP
+.BI "\-g"
+with this option, if a file of solid kmer exists with same prefix name and same k value, then it is re\-used and not re\-computed."
+.TP
+.BI "\-k value"
+Set the length of used kmers. Must fit the compiled value. Default=31"
+.TP
+.BI "\-f value"
+Fingerprint size. Size of the key associated to each indexed value, limiting false positives. Default=12"
+.TP
+.BI "\-G value"
+gamma value. MPHF expert users parameter \- Default=2"
+.TP
+.BI "\-a"
+kmer abundance min (kmer from seen less than this value both in the bank and in the query are not indexed). Default=2"
+.TP
+.BI "\-A"
+with is option, kmers must be present at least \'a\' times in the bank AND in the queries to be indexed."
+.TP
+.BI "\-s"
+Minimal percentage of shared kmer span for considering 2 reads as similar.    The kmer span is the number of bases from the read query covered by a kmer shared with the target read. If a read of length 80 has a kmer\-span of 60 with another read from the bank (of unkonwn size), then the percentage of shared kmer span is 75%. If a least a windows (of size \"windows_size\" contains at least kmer_threshold percent of positionf covered by shared kmers, the read couple is conserved.)"
+.TP
+.BI "\-l"
+Keep low complexity regions (default false)"
+.TP
+.BI "\-w"
+size of the window. If the windows size is zero (default value), then the full read is considered"
+.TP
+.BI "\-t"
+number of thread used. Default=0"
+.TP
+.BI "\-d"
+use disk over RAM (slower and no impact with \-c option)"
+.RE
+.PP
+
+
+.SH EXAMPLES
+Run a simple test looking for reads from data/c2.fasta.gz that share at least 20 kmers 
+(k=25) with data/c1.fasta.gz. Kmers indexed from data/c1.fasta.gz are those occurring 
+at least 2 times.
+.PP
+.RS
+short\-read\-connector \-b data/c1.fasta.gz \-q data/fof.txt
+.RE
+.PP
+
+.SH "SEE ALSO"
+.BR short\-read\-connector (1)
+.br
+The programs are documented fully by the Genscale Team
+available at https://github.com/GATB/short_read_connector
+
+.SH AUTHORS
+This manual page was written by Pierre Vignet <pierre.vignet.contact@caramail.fr>
+for the Debian project (and may be used by others).

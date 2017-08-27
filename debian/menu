@@ -1,0 +1,2 @@
+?package(short-read-connector):needs="text" section="Applications/Science/Biology"\
+  title="short-read-connector" command="/usr/bin/short-read-connector"
